@@ -7,6 +7,7 @@ import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 
 //COMPONENTS
+import MyHeader from "./components/MyHeader";
 import MyButton from "./components/MyButton";
 
 function App() {
@@ -15,6 +16,15 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <MyHeader
+          headText={"App"}
+          leftChild={
+            <MyButton text={"left btn"} onClick={() => alert("click left")} />
+          }
+          rightChild={
+            <MyButton text={"right btn"} onClick={() => alert("click right")} />
+          }
+        />
         <h2>App.js</h2>
 
         <MyButton
