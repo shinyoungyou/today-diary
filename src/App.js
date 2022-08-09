@@ -1,4 +1,4 @@
-import { useReducer, useRef } from "react";
+import React, { useReducer, useRef } from "react";
 
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -37,8 +37,45 @@ const reducer = (state, action) => {
   return newState;
 };
 
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
+
+const dummyData = [
+  {
+    id: 1,
+    emotion: 1,
+    content: "오늘의 일기 1번",
+    date: 1660056444413,
+  },
+  {
+    id: 1,
+    emotion: 2,
+    content: "오늘의 일기 2번",
+    date: 1660056444414,
+  },
+  {
+    id: 3,
+    emotion: 3,
+    content: "오늘의 일기 3번",
+    date: 1660056444415,
+  },
+  {
+    id: 4,
+    emotion: 4,
+    content: "오늘의 일기 4번",
+    date: 1660056444416,
+  },
+  {
+    id: 5,
+    emotion: 5,
+    content: "오늘의 일기 5번",
+    date: 1660056444417,
+  },
+];
+
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dummyData);
+  console.log(new Date().getTime());
   //CREATE
   const dataId = useRef(0);
   const onCreate = (date, content, emotion) => {
@@ -71,16 +108,20 @@ function App() {
     });
   };
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/new" element={<New />} />
-          <Route path="/edit" element={<Edit />} />
-          <Route path="/diary/:id" element={<Diary />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onRemove, onEdit }}>
+        <BrowserRouter>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/new" element={<New />} />
+              <Route path="/edit" element={<Edit />} />
+              <Route path="/diary/:id" element={<Diary />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 
