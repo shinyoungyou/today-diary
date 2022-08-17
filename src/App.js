@@ -48,7 +48,7 @@ const dummyData = [
     date: 1660056444413,
   },
   {
-    id: 1,
+    id: 2,
     emotion: 2,
     content: "Diary of Today 2",
     date: 1660056444414,
