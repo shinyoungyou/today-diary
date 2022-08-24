@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryDispatchContext } from "../App";
 
@@ -9,21 +9,27 @@ import EmotionItem from "./EmotionItem";
 import { getStringDate } from "../util/date";
 import { emotionList } from "../util/emotion";
 
-const env = process.env;
-env.PUBLIC_URL = env.PUBLIC_URL || "";
+const DiaryEditor = ({ isEdit, originData }) => {
+  // time calculationg
+  let Hour = new Date().getHours();
+  const nowMt = new Date().getMinutes();
+  const ampm = Hour >= 12 ? "PM" : "AM";
+  const nowHour = Hour >= 12 ? (Hour -= 12) : Hour;
+  const [time, setTime] = useState(
+    `${nowHour}:${String(nowMt).padStart(2, "0")} ${ampm}`
+  ); // h:m (am/pm)
 
-export const DiaryEditor = ({ isEdit, originData }) => {
   const contentRef = useRef();
   const [content, setContent] = useState("");
   const [emotion, setEmotion] = useState(3);
   const [date, setDate] = useState(getStringDate(new Date()));
-
-  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
-  const handleClickEmote = (emotion) => {
-    setEmotion(emotion);
-  };
-
   const navigate = useNavigate();
+
+  const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
+
+  const handleClickEmote = useCallback((emotion) => {
+    setEmotion(emotion);
+  });
 
   const handleSubmit = () => {
     if (content.length < 1) {
@@ -34,35 +40,53 @@ export const DiaryEditor = ({ isEdit, originData }) => {
     if (
       window.confirm(
         isEdit
-          ? "Are you sure to Modify the Diary?"
-          : "Are you sure to Create a New Diary?"
+          ? "Are you sure to edit the diary?"
+          : "Are you sure to create a new diary?"
       )
     ) {
       if (!isEdit) {
-        onCreate(date, content, emotion);
+        onCreate(date, time, content, emotion);
       } else {
-        onEdit(originData.id, date, content, emotion);
+        onEdit(originData.id, date, time, content, emotion);
       }
     }
-    onCreate(date, content, emotion);
     navigate("/", { replace: true });
   };
 
+  const handleRemove = () => {
+    if (window.confirm("Are you sure to remove the diary?")) {
+      onRemove(originData.id);
+      navigate("/", { replace: true });
+    }
+  };
+
   useEffect(() => {
-    setDate(getStringDate(new Date(parseInt(originData.date))));
-    setEmotion(originData.emotion);
-    setContent(originData.content);
+    if (isEdit) {
+      setDate(getStringDate(new Date(parseInt(originData.date))));
+      setTime(`${nowHour}:${nowMt} ${ampm}`);
+      setEmotion(originData.emotion);
+      setContent(originData.content);
+    }
   }, [isEdit, originData]);
 
   return (
     <div className="DiaryEditor">
       <MyHeader
-        headText={isEdit ? "Modify a Diary" : "Create a New Diary"}
+        headText={isEdit ? "Edit diary" : "Create a new diary"}
         leftChild={<MyButton text={"< Go Back"} onClick={() => navigate(-1)} />}
+        rightChild={
+          isEdit && (
+            <MyButton
+              text={"Delete"}
+              type={"negative"}
+              onClick={handleRemove}
+            />
+          )
+        }
       />
-      <div>
+      <div className="main">
         <section>
-          <h4>What day is it?</h4>
+          <h2>What day is it?</h2>
           <div className="input_box">
             <input
               className="input_date"
@@ -73,7 +97,7 @@ export const DiaryEditor = ({ isEdit, originData }) => {
           </div>
         </section>
         <section>
-          <h4>Emotion of Today</h4>
+          <h2>How did you feel today?</h2>
           <div className="input_box emotion_list_wrapper">
             {emotionList.map((it) => (
               <EmotionItem
@@ -86,7 +110,7 @@ export const DiaryEditor = ({ isEdit, originData }) => {
           </div>
         </section>
         <section>
-          <h4>Diary of Today</h4>
+          <h2>How was it today?</h2>
           <div className="input_box text_wrapper">
             <textarea
               placeholder="How was it today?"
