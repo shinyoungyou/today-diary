@@ -6,7 +6,6 @@ import { DiaryStateContext } from "../App";
 import MyHeader from "../components/MyHeader";
 import MyButton from "../components/MyButton";
 
-import { getStringDate } from "../util/date";
 import { emotionList } from "../util/emotion";
 
 const Diary = () => {
@@ -14,6 +13,26 @@ const Diary = () => {
   const diaryList = useContext(DiaryStateContext);
   const navigate = useNavigate();
   const [data, setData] = useState();
+
+  const getStringDate = (date) => {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate() + 1;
+
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    if (day < 10) {
+      day = `0${day}`;
+    }
+
+    return `${year}-${month}-${day}`;
+  };
+
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `Diary ${id}`;
+  }, []);
 
   useEffect(() => {
     if (diaryList.length >= 1) {
@@ -37,24 +56,24 @@ const Diary = () => {
     const curEmotionData = emotionList.find(
       (it) => parseInt(it.emotion_id) === parseInt(data.emotion)
     );
-    console.log(curEmotionData);
+    // console.log(curEmotionData);
     return (
       <div className="DiaryPage">
         <MyHeader
-          headText={`recorded on ${getStringDate(new Date(data.date))}`}
+          headText={`on ${getStringDate(new Date(data.date))}`}
           leftChild={
             <MyButton text={"< Go Back"} onClick={() => navigate(-1)} />
           }
           rightChild={
             <MyButton
-              text={"Modify"}
+              text={"Edit"}
               onClick={() => navigate(`/edit/${data.id}`)}
             />
           }
         />
         <article>
           <section>
-            <h4>Emotion of Today</h4>
+            <h2>How did you feel today?</h2>
             <div
               className={[
                 "diary_img_wrapper",
@@ -71,7 +90,7 @@ const Diary = () => {
             </div>
           </section>
           <section>
-            <h4>Diary of Today</h4>
+            <h2>How was it today?</h2>
             <div className="diary_content_wrapper">
               <p>{data.content}</p>
             </div>

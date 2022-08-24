@@ -13,6 +13,11 @@ const Home = () => {
   const headText = ` ${curDate.getFullYear()} / ${curDate.getMonth() + 1}`;
 
   useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `Today Diary`;
+  }, []);
+
+  useEffect(() => {
     if (diaryList.length >= 1) {
       const firstDay = new Date(
         curDate.getFullYear(),
@@ -23,8 +28,11 @@ const Home = () => {
       const lastDay = new Date(
         curDate.getFullYear(),
         curDate.getMonth() + 1,
-        0
-      );
+        0,
+        23,
+        59,
+        59
+      ).getTime();
 
       setData(
         diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
@@ -33,7 +41,7 @@ const Home = () => {
   }, [diaryList, curDate]);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [data]);
 
   const increaseMonth = () => {
