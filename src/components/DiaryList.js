@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MyButton from "./MyButton";
 import DiaryItem from "./DiaryItem";
@@ -10,11 +10,11 @@ const sortOptionList = [
 
 const filterOptionList = [
   { value: "all", name: "all of feelings" },
-  { value: "good", name: "good feelings" },
-  { value: "bad", name: "bad feelingss" },
+  { value: "good", name: "good feelings only" },
+  { value: "bad", name: "bad feelings only" },
 ];
 
-const ControlMenu = ({ value, onChange, optionList }) => {
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
   return (
     <select
       className="ControlMenu"
@@ -28,7 +28,7 @@ const ControlMenu = ({ value, onChange, optionList }) => {
       ))}
     </select>
   );
-};
+});
 
 const DiaryList = ({ diaryList }) => {
   const navigate = useNavigate();
@@ -38,9 +38,9 @@ const DiaryList = ({ diaryList }) => {
   const getProcessedDiaryList = () => {
     const compare = (a, b) => {
       if (sortType === "latest") {
-        return parseInt(b.date) - parseInt(a.date);
+        return parseInt(b.id) - parseInt(a.id);
       } else {
-        return parseInt(a.date) - parseInt(b.date);
+        return parseInt(a.id) - parseInt(b.id);
       }
     };
 
@@ -73,7 +73,7 @@ const DiaryList = ({ diaryList }) => {
             optionList={filterOptionList}
           />
         </div>
-        <div className="right_col">
+        <div className="bottom_col">
           <MyButton
             type={"positive"}
             text={"New Diary"}
