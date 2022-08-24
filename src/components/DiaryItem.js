@@ -32,13 +32,6 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
 
   const { onRemove, onCreate } = useContext(DiaryDispatchContext);
 
-  const handleRemove = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      onRemove(id);
-    }
-    onCreate();
-  };
-
   return (
     <div className="DiaryItem">
       <div
