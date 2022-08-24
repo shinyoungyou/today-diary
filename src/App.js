@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -34,61 +34,38 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "Diary of Today 1",
-    date: 1660056444413,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "Diary of Today 2",
-    date: 1660056444414,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "Diary of Today 3",
-    date: 1660056444415,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "Diary of Today 4",
-    date: 1660056444416,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "Diary of Today 5",
-    date: 1660056444417,
-  },
-  {
-    id: 6,
-    emotion: 2,
-    content: "Diary of Today 6",
-    date: 1760056444418,
-  },
-];
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData);
-  //CREATE
+  const [data, dispatch] = useReducer(reducer, []);
+
+  useEffect(() => {
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+
+      if (diaryList.length >= 1) {
+        dataId.current = parseInt(diaryList[0].id) + 1;
+        dispatch({ type: "INIT", data: diaryList });
+      }
+    }
+  }, []);
   const dataId = useRef(0);
-  const onCreate = (date, content, emotion) => {
+  //CREATE
+  const onCreate = (date, time, content, emotion) => {
     dispatch({
       type: "CREATE",
       data: {
         id: dataId.current,
         date: new Date(date).getTime(),
+        time,
         content,
         emotion,
       },
@@ -100,12 +77,13 @@ function App() {
     dispatch({ type: "REMOVE", targetId });
   };
   //EDIT
-  const onEdit = (targetId, date, content, emotion) => {
+  const onEdit = (targetId, date, time, content, emotion) => {
     dispatch({
       type: "EDIT",
       data: {
         id: targetId,
         date: new Date(date).getTime(),
+        time,
         content,
         emotion,
       },
