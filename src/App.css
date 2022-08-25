@@ -28,7 +28,7 @@ body {
 
 #root {
   background-color: #fff;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 290px 0px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .App {
@@ -102,7 +102,7 @@ header .head_btn_right {
 /* DiaryList */
 
 .DiaryList {
-  padding-bottom: 10%;
+  padding-bottom: 14%;
 }
 
 .DiaryList .menu_wrapper {
@@ -154,14 +154,19 @@ header .head_btn_right {
 }
 
 /* DiaryItem */
+
+.ItemWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3vh;
+}
 .DiaryItem {
-  padding-top: 2.5%;
-  padding-bottom: 2.5%;
-
-  border-bottom: 1px solid #e2e2e2;
-
   display: flex;
   justify-content: space-between;
+  padding: 2.5%;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  box-shadow: 0 0 7px #dedede;
 }
 
 .DiaryItem .emotion_img_wrapper {

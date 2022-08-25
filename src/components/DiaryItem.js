@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { DiaryDispatchContext } from "../App";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import MyButton from "./MyButton";
@@ -30,8 +29,6 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
     navigate(`/edit/${id}`);
   };
 
-  const { onRemove, onCreate } = useContext(DiaryDispatchContext);
-
   return (
     <div className="DiaryItem">
       <div
@@ -43,7 +40,7 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
       >
         <img
           src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`}
-          alt=""
+          alt="Emotion_Img"
         />
       </div>
       <div onClick={goDetail} className="info_wrapper">

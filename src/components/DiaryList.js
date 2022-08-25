@@ -4,14 +4,14 @@ import MyButton from "./MyButton";
 import DiaryItem from "./DiaryItem";
 
 const sortOptionList = [
-  { value: "latest", name: "order of latest" },
-  { value: "oldest", name: "order of oldest" },
+  { value: "latest", name: "Order of latest" },
+  { value: "oldest", name: "Order of oldest" },
 ];
 
 const filterOptionList = [
-  { value: "all", name: "all of feelings" },
-  { value: "good", name: "good feelings only" },
-  { value: "bad", name: "bad feelings only" },
+  { value: "all", name: "All of feelings" },
+  { value: "good", name: "Good feelings only" },
+  { value: "bad", name: "Bad feelings only" },
 ];
 
 const ControlMenu = React.memo(({ value, onChange, optionList }) => {
@@ -81,10 +81,11 @@ const DiaryList = ({ diaryList }) => {
           />
         </div>
       </div>
-
-      {getProcessedDiaryList().map((it) => (
-        <DiaryItem key={it.id} {...it} />
-      ))}
+      <div className="ItemWrapper">
+        {getProcessedDiaryList().map((it) => (
+          <DiaryItem key={it.id} {...it} />
+        ))}
+      </div>
     </div>
   );
 };

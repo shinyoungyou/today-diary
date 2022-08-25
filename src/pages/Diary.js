@@ -82,7 +82,7 @@ const Diary = () => {
             >
               <img
                 src={curEmotionData.emotion_img}
-                alt={`eomtion${curEmotionData.emotion_id}`}
+                alt={`Emotion${curEmotionData.emotion_id}`}
               />
               <div className="emotion_descript">
                 {curEmotionData.emotion_descript}
