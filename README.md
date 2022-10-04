@@ -16,7 +16,7 @@
 2. React Hooks
 3. react-router-dom: useParams, useNavigate
 4. styled-component
-5. Redux
+5. useReducer
 6. node.js
 7. localStorage
 8. Deploy via firebase
