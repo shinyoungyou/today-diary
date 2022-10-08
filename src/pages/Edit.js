@@ -16,6 +16,8 @@ const Edit = () => {
 
   useEffect(() => {
     if (diaryList.length >= 1) {
+      // Return the first diary item in diaryList array
+      // whose id is the same with Path Variable
       const targetDiary = diaryList.find(
         (it) => parseInt(it.id) === parseInt(id)
       );

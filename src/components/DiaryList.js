@@ -102,6 +102,8 @@ const DiaryList = ({ diaryList }) => {
   );
 };
 
+// If user visits first or didn't create any diary at all,
+// empty array is passed.
 DiaryList.defaultProps = {
   diaryList: [],
 };

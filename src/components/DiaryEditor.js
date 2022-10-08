@@ -10,7 +10,7 @@ import { getStringDate } from "../util/date";
 import { emotionList } from "../util/emotion";
 
 const DiaryEditor = ({ isEdit, originData }) => {
-  // time calculationg
+  // time calculator
   let Hour = new Date().getHours();
   const nowMt = new Date().getMinutes();
   const ampm = Hour >= 12 ? "PM" : "AM";

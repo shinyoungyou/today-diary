@@ -41,7 +41,7 @@ const reducer = (state, action) => {
   return newState;
 };
 
-// to avoid props drilling
+// Create Context to avoid props drilling with no default value
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 

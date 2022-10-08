@@ -17,12 +17,13 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
     month = `0${month}`;
   }
 
-  // getMonth() returns from 1 but there is an error somewhere -> need to add +1
+  // getMonth() returns from 1 but there is an unexpected error somewhere -> need to add +1
   let day = strDate.getDate() + 1;
   if (day < 10) {
     day = `0${day}`;
   }
 
+  // Custom date format: e.g. 2022/01/01
   const dateText = `${strDate.getFullYear()}/${month}/${day}`;
 
   const goDetail = () => {
@@ -40,6 +41,9 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
         className={[
           "emotion_img_wrapper",
           `emotion_img_wrapper_${emotion}`,
+          // create and return a new string by concatenating 
+          // all of the elements in this array, 
+          // separated by space(" ")
         ].join(" ")}
       >
         <img
