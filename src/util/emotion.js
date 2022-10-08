@@ -1,3 +1,4 @@
+// In case of process.env.PUBLIC_URL not working
 const env = process.env;
 env.PUBLIC_URL = env.PUBLIC_URL || "";
 

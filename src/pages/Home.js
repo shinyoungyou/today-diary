@@ -9,7 +9,7 @@ const Home = () => {
   const diaryList = useContext(DiaryStateContext);
 
   const [data, setData] = useState([]);
-  const [curDate, setCurDate] = useState(new Date());
+  const [curDate, setCurDate] = useState(new Date()); // new Date() = current time
   const headText = ` ${curDate.getFullYear()} / ${curDate.getMonth() + 1}`;
 
   useEffect(() => {
@@ -22,27 +22,24 @@ const Home = () => {
       const firstDay = new Date(
         curDate.getFullYear(),
         curDate.getMonth(),
-        1
+        1 // First day of the month, 0:00:00
       ).getTime();
 
       const lastDay = new Date(
         curDate.getFullYear(),
         curDate.getMonth() + 1,
-        0,
+        0, // Last day of the month, 23:59:59
         23,
         59,
         59
       ).getTime();
 
       setData(
+        // Return Array of only days that the month has
         diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
       );
     }
   }, [diaryList, curDate]);
-
-  useEffect(() => {
-    // console.log(data);
-  }, [data]);
 
   const increaseMonth = () => {
     setCurDate(

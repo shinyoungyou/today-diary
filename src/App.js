@@ -22,6 +22,8 @@ const reducer = (state, action) => {
       break;
     }
     case "REMOVE": {
+      // Return Array of all diary Except Selected Diary Item
+      // Selected Diary Item -> being removed
       newState = state.filter((it) => it.id !== action.targetId);
       break;
     }
@@ -34,10 +36,12 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  // Add a diary item to localStorage after stringifing it
   localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
+// to avoid props drilling
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
@@ -45,13 +49,19 @@ function App() {
   const [data, dispatch] = useReducer(reducer, []);
 
   useEffect(() => {
+    // Read data from localStorage only when the component just mounted
     const localData = localStorage.getItem("diary");
+
+    // In case User visits for the first time (localData = false)
     if (localData) {
+      // Parsing data from JSON string to their original type
+      // And Sorting elements in Descending Order
       const diaryList = JSON.parse(localData).sort(
         (a, b) => parseInt(b.id) - parseInt(a.id)
       );
 
       if (diaryList.length >= 1) {
+        // diaryList[0] = the latest one
         dataId.current = parseInt(diaryList[0].id) + 1;
         dispatch({ type: "INIT", data: diaryList });
       }
@@ -60,6 +70,7 @@ function App() {
   const dataId = useRef(0);
   //CREATE
   const onCreate = (date, time, content, emotion) => {
+    // Dispatch brings action object and type to Reducer
     dispatch({
       type: "CREATE",
       data: {
@@ -74,10 +85,12 @@ function App() {
   };
   //REMOVE
   const onRemove = (targetId) => {
+    // Dispatch brings action object and type to Reducer
     dispatch({ type: "REMOVE", targetId });
   };
   //EDIT
   const onEdit = (targetId, date, time, content, emotion) => {
+    // Dispatch brings action object and type to Reducer
     dispatch({
       type: "EDIT",
       data: {

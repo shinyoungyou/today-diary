@@ -36,6 +36,7 @@ const Diary = () => {
 
   useEffect(() => {
     if (diaryList.length >= 1) {
+      // Return
       const targetDiary = diaryList.find(
         (it) => parseInt(it.id) === parseInt(id)
       );

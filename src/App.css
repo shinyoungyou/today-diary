@@ -313,6 +313,7 @@ header .head_btn_right {
 
 .EmotionItem span {
   font-size: 18px;
+  text-transform: capitalize;
 }
 
 .EmotionItem_off {

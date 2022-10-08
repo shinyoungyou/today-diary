@@ -29,7 +29,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
   const handleClickEmote = useCallback((emotion) => {
     setEmotion(emotion);
-  });
+  }, []);
 
   const handleSubmit = () => {
     if (content.length < 1) {

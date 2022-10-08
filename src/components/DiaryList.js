@@ -14,11 +14,15 @@ const filterOptionList = [
   { value: "bad", name: "Bad feelings only" },
 ];
 
+// Optimization: Avoid ControlMenu re-rendering
+// React.memo(HOC, higher-order component): Reusing component logic
 const ControlMenu = React.memo(({ value, onChange, optionList }) => {
   return (
     <select
       className="ControlMenu"
       value={value}
+      // Don't need to use the useCallback function
+      // Because onChange = State Change function
       onChange={(e) => onChange(e.target.value)}
     >
       {optionList.map((it, idx) => (
@@ -38,20 +42,26 @@ const DiaryList = ({ diaryList }) => {
   const getProcessedDiaryList = () => {
     const compare = (a, b) => {
       if (sortType === "latest") {
+        // Sort elements in Descending Order
         return parseInt(b.id) - parseInt(a.id);
       } else {
+        // Sort elements in Ascending Order
         return parseInt(a.id) - parseInt(b.id);
       }
     };
 
     const filterCallBack = (item) => {
       if (filter === "good") {
+        // Return Array of Only Good feelings
         return parseInt(item.emotion) <= 3;
       } else {
+        // Return Array of Only Bad feelings
         return parseInt(item.emotion) > 3;
       }
     };
 
+    // copyList: a Deep Copy of diaryList whose properties do not share the same references
+    // copyList do not reflect in the original object.
     const copyList = JSON.parse(JSON.stringify(diaryList));
     const filteredList =
       filter === "all" ? copyList : copyList.filter((it) => filterCallBack(it));
@@ -64,11 +74,13 @@ const DiaryList = ({ diaryList }) => {
         <div className="left_col">
           <ControlMenu
             value={sortType}
+            // onChange = State Change function
             onChange={setSortType}
             optionList={sortOptionList}
           />
           <ControlMenu
             value={filter}
+            // onChange = State Change function
             onChange={setFilter}
             optionList={filterOptionList}
           />

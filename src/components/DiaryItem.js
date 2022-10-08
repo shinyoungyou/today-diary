@@ -2,18 +2,22 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import MyButton from "./MyButton";
+// Optimized for the last command line
 const DiaryItem = ({ id, date, time, emotion, content }) => {
   const navigate = useNavigate();
 
+  // In case of process.env.PUBLIC_URL not working
   const env = process.env;
   env.PUBLIC_URL = env.PUBLIC_URL || "";
 
   const strDate = new Date(parseInt(date));
 
-  let month = strDate.getMonth() + 1;
+  let month = strDate.getMonth() + 1; // getMonth() returns from 0 -> need to add +1
   if (month < 10) {
     month = `0${month}`;
   }
+
+  // getMonth() returns from 1 but there is an error somewhere -> need to add +1
   let day = strDate.getDate() + 1;
   if (day < 10) {
     day = `0${day}`;
@@ -58,4 +62,5 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
   );
 };
 
+// Optimization: because DiaryItem can render Image Files
 export default React.memo(DiaryItem);
