@@ -22,7 +22,7 @@ const reducer = (state, action) => {
       break;
     }
     case "REMOVE": {
-      // Return Array of all diary Except Selected Diary Item
+      // Return array of all diary Except Selected Diary Item
       // Selected Diary Item -> being removed
       newState = state.filter((it) => it.id !== action.targetId);
       break;
@@ -42,6 +42,7 @@ const reducer = (state, action) => {
 };
 
 // Create Context to avoid props drilling with no default value
+// To pass data through the component tree without having to pass props down manually at every level
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 

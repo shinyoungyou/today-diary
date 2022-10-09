@@ -16,6 +16,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
   const ampm = Hour >= 12 ? "PM" : "AM";
   const nowHour = Hour >= 12 ? (Hour -= 12) : Hour;
   const [time, setTime] = useState(
+    // Pads the current string with string "0" until the resulting string reaches length = 2.
     `${nowHour}:${String(nowMt).padStart(2, "0")} ${ampm}`
   ); // h:m (am/pm)
 

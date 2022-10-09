@@ -41,8 +41,8 @@ const DiaryItem = ({ id, date, time, emotion, content }) => {
         className={[
           "emotion_img_wrapper",
           `emotion_img_wrapper_${emotion}`,
-          // create and return a new string by concatenating 
-          // all of the elements in this array, 
+          // create and return a new string by concatenating
+          // all of the elements in this array,
           // separated by space(" ")
         ].join(" ")}
       >
