@@ -71,7 +71,7 @@ function App() {
   const dataId = useRef(0);
   //CREATE
   const onCreate = (date, time, content, emotion) => {
-    // Dispatch brings action object and type to Reducer
+    // Dispatch brings action object to Reducer
     dispatch({
       type: "CREATE",
       data: {
@@ -86,12 +86,12 @@ function App() {
   };
   //REMOVE
   const onRemove = (targetId) => {
-    // Dispatch brings action object and type to Reducer
+    // Dispatch brings action object to Reducer
     dispatch({ type: "REMOVE", targetId });
   };
   //EDIT
   const onEdit = (targetId, date, time, content, emotion) => {
-    // Dispatch brings action object and type to Reducer
+    // Dispatch brings action object to Reducer
     dispatch({
       type: "EDIT",
       data: {
