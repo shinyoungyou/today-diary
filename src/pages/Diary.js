@@ -16,8 +16,8 @@ const Diary = () => {
 
   const getStringDate = (date) => {
     let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate() + 1;
+    let month = date.getMonth() + 1; // getMonth() returns from 0 -> need to add +1
+    let day = date.getDate() + 1; // getMonth() returns from 1 but there is an unexpected error somewhere -> need to add +1
 
     if (month < 10) {
       month = `0${month}`;
@@ -26,6 +26,7 @@ const Diary = () => {
       day = `0${day}`;
     }
 
+    // Custom date format: e.g. 2022-01-01
     return `${year}-${month}-${day}`;
   };
 
@@ -36,7 +37,8 @@ const Diary = () => {
 
   useEffect(() => {
     if (diaryList.length >= 1) {
-      // Return
+      // Return the first diary item in diaryList array
+      // whose id is the same with Path Variable
       const targetDiary = diaryList.find(
         (it) => parseInt(it.id) === parseInt(id)
       );
@@ -54,10 +56,12 @@ const Diary = () => {
   if (!data) {
     return <div className="DiaryPage">loading...</div>;
   } else {
+    // Return the first emotion item in emotionList array
+    // whose id is the same with current emotion of the diary item
     const curEmotionData = emotionList.find(
       (it) => parseInt(it.emotion_id) === parseInt(data.emotion)
     );
-    // console.log(curEmotionData);
+
     return (
       <div className="DiaryPage">
         <MyHeader
@@ -79,6 +83,9 @@ const Diary = () => {
               className={[
                 "diary_img_wrapper",
                 `diary_img_wrapper_${data.emotion}`,
+                // create and return a new string by concatenating
+                // all of the elements in this array,
+                // separated by space(" ")
               ].join(" ")}
             >
               <img

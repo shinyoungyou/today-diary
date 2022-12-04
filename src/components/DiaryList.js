@@ -52,10 +52,10 @@ const DiaryList = ({ diaryList }) => {
 
     const filterCallBack = (item) => {
       if (filter === "good") {
-        // Return Array of Only Good feelings
+        // Return array of Only Good feelings
         return parseInt(item.emotion) <= 3;
       } else {
-        // Return Array of Only Bad feelings
+        // Return array of Only Bad feelings
         return parseInt(item.emotion) > 3;
       }
     };
@@ -102,6 +102,8 @@ const DiaryList = ({ diaryList }) => {
   );
 };
 
+// If user visits first or didn't create any diary at all,
+// empty array is passed.
 DiaryList.defaultProps = {
   diaryList: [],
 };

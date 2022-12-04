@@ -13,6 +13,9 @@ const EmotionItem = ({
       className={[
         "EmotionItem",
         isSelected ? `EmotionItem_on_${emotion_id}` : `EmotionItem_off`,
+        // create and return a new string by concatenating
+        // all of the elements in this array,
+        // separated by space(" ")
       ].join(" ")}
     >
       <img src={emotion_img} alt={`Emotion${emotion_id}`} />

@@ -22,7 +22,7 @@ const reducer = (state, action) => {
       break;
     }
     case "REMOVE": {
-      // Return Array of all diary Except Selected Diary Item
+      // Return array of all diary Except Selected Diary Item
       // Selected Diary Item -> being removed
       newState = state.filter((it) => it.id !== action.targetId);
       break;
@@ -41,7 +41,8 @@ const reducer = (state, action) => {
   return newState;
 };
 
-// to avoid props drilling
+// Create Context to avoid props drilling with no default value
+// To pass data through the component tree without having to pass props down manually at every level
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
@@ -70,7 +71,7 @@ function App() {
   const dataId = useRef(0);
   //CREATE
   const onCreate = (date, time, content, emotion) => {
-    // Dispatch brings action object and type to Reducer
+    // Dispatch brings action object to Reducer
     dispatch({
       type: "CREATE",
       data: {
@@ -85,12 +86,12 @@ function App() {
   };
   //REMOVE
   const onRemove = (targetId) => {
-    // Dispatch brings action object and type to Reducer
+    // Dispatch brings action object to Reducer
     dispatch({ type: "REMOVE", targetId });
   };
   //EDIT
   const onEdit = (targetId, date, time, content, emotion) => {
-    // Dispatch brings action object and type to Reducer
+    // Dispatch brings action object to Reducer
     dispatch({
       type: "EDIT",
       data: {

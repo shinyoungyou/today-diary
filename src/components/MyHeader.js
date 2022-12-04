@@ -1,3 +1,4 @@
+// Custom Header Component 
 const MyHeader = ({ headText, leftChild, rightChild }) => {
   return (
     <header>

@@ -35,7 +35,7 @@ const Home = () => {
       ).getTime();
 
       setData(
-        // Return Array of only days that the month has
+        // Return array of only days that the month has
         diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
       );
     }
